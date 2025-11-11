@@ -1,5 +1,5 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 3.5)
-SET(Python_INCLUDE_DIR "/usr/include/python3.11")
+SET(Python_INCLUDE_DIR "/usr/include/python3.12")
 set (CMAKE_CXX_STANDARD 11)
 PROJECT(PythonModule LANGUAGES CXX)
     SET (pycades_LIB_SRCS
@@ -37,6 +37,11 @@ PROJECT(PythonModule LANGUAGES CXX)
             PyCadesStore.cpp
             PyCadesSymmetricAlgorithm.cpp
             PyCadesVersion.cpp
+            PyEnrollContainer.cpp
+            PyEnrollContainers.cpp
+            PyEnrollContainerKey.cpp
+            PyEnrollContainerKeys.cpp
+            PyEnrollCspInformation.cpp
         )
 FIND_PACKAGE( Boost REQUIRED )
 
@@ -74,6 +79,7 @@ SET(pycades_DIRS
      /opt/cprocsp/include/pki/cppcades
      /opt/cprocsp/include/pki/cplib
      /opt/cprocsp/include/pki
+     ${CMAKE_CURRENT_SOURCE_DIR}/cplib
 )    
 
 INCLUDE_DIRECTORIES( ${Boost_INCLUDE_DIRS} )

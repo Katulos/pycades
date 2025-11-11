@@ -29,12 +29,18 @@
 #include "PyCadesStore.h"
 #include "PyCadesSymmetricAlgorithm.h"
 #include "PyCadesVersion.h"
+#include "PyEnrollContainer.h"
+#include "PyEnrollContainers.h"
+#include "PyEnrollContainerKey.h"
+#include "PyEnrollContainerKeys.h"
+#include "PyEnrollCspInformation.h"
+
 #if IS_CADES_VERSION_GREATER_EQUAL(2, 0, 15000)
 #include "PyCadesExtension.h"
 #include "PyCadesExtensions.h"
 #endif
 
-#define PYCADES_VERSION "0.1.70196"
+#define PYCADES_VERSION "0.1.70200"
 static PyObject * pycades_ModuleVersion(PyObject *self, PyObject *args)
 {
     return Py_BuildValue("s", PYCADES_VERSION);
@@ -254,6 +260,37 @@ PyMODINIT_FUNC PyInit_pycades(void) {
         return NULL;
     }
     Py_INCREF(&VersionType);
+
+    if (PyType_Ready (&ContainerType) < 0){
+        PyErr_SetString(PyExc_RuntimeError, "Cannot create Container object");
+        return NULL;
+    }
+    Py_INCREF(&ContainerType);
+
+    if (PyType_Ready (&ContainersType) < 0){
+        PyErr_SetString(PyExc_RuntimeError, "Cannot create Containers object");
+        return NULL;
+    }
+    Py_INCREF(&ContainersType);
+
+    if (PyType_Ready (&ContainerKeyType) < 0){
+        PyErr_SetString(PyExc_RuntimeError, "Cannot create ContainerKey object");
+        return NULL;
+    }
+    Py_INCREF(&ContainerKeyType);
+
+    if (PyType_Ready (&ContainerKeysType) < 0){
+        PyErr_SetString(PyExc_RuntimeError, "Cannot create ContainerKeys object");
+        return NULL;
+    }
+    Py_INCREF(&ContainerKeysType);
+
+    if (PyType_Ready(&CspInformationType) < 0){
+        PyErr_SetString(PyExc_RuntimeError, "Cannot create CspInformation object");
+        return NULL;
+    }
+    Py_INCREF(&CspInformationType);
+    PyModule_AddObject(module, "CspInformation", (PyObject *)&CspInformationType);
 
 #if IS_CADES_VERSION_GREATER_EQUAL(2, 0, 15000)
     if (PyType_Ready (&ExtensionType) < 0){

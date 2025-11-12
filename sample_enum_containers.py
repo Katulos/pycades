@@ -21,10 +21,13 @@ for i in range(conts.Count):
         print("    " + str(j+1) + ".")
         print("    Exportable: " + str(key.IsExportable))
         print("    ExpirationTime: " + key.ExpirationTime)
-        print("    PublicKey Algorithm: " + key.PublicKey.Algorithm.Value)
-        print("    PublicKey KeyLength: " + str(key.PublicKey.Length))
-        print("    KP_FP: " + key.KP_FP)
-        print("    KP_ALGID: " + str(key.KP_ALGID))
+        if (hasattr(key, 'PublicKey')):
+            print("    PublicKey Algorithm: " + key.PublicKey.Algorithm.Value)
+            print("    PublicKey KeyLength: " + str(key.PublicKey.Length))
+        if (hasattr(key, 'KP_FP')):
+            print("    KP_FP: " + key.KP_FP)
+        if (hasattr(key, 'KP_ALGID')):
+            print("    KP_ALGID: " + str(key.KP_ALGID))
         print("    HasCertificate: " + str(key.HasCertificate))
         if (key.HasCertificate):
             oCertificate = key.Certificate

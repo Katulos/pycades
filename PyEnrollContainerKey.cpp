@@ -60,6 +60,7 @@ static PyObject *ContainerKey_getCertificate(ContainerKey *self)
     return Py_BuildValue("N", pCertificate);
 }
 
+#if IS_CADES_VERSION_GREATER_EQUAL(2, 0, 15000)
 static PyObject *ContainerKey_getPublicKey(ContainerKey *self)
 {
     NS_SHARED_PTR::shared_ptr<CPPCadesCPPublicKeyObject> pCPPCadesPublicKey;
@@ -76,13 +77,16 @@ static PyObject *ContainerKey_getKP_FP(ContainerKey *self)
     HR_METHOD_ERRORCHECK_RETURN(self->m_pCppEnrollImpl->get_KP_FP(sValue));
     return Py_BuildValue("s", sValue.GetString());
 }
+#endif
 
+#if IS_CADES_VERSION_GREATER_EQUAL(2, 0, 15400)
 static PyObject *ContainerKey_getKP_ALGID(ContainerKey *self)
 {
     DWORD dwValue;
     HR_METHOD_ERRORCHECK_RETURN(self->m_pCppEnrollImpl->get_KP_ALGID(dwValue));
     return Py_BuildValue("l", dwValue);
 }
+#endif
 
 static PyObject *ContainerKey_getExpirationTime(ContainerKey *self)
 {
@@ -98,10 +102,14 @@ static PyGetSetDef ContainerKey_getset[] = {
     {"HasCertificate", (getter)ContainerKey_getHasCertificate, NULL, "HasCertificate", NULL},
     {"Type", (getter)ContainerKey_getType, NULL, "Type", NULL},
     {"Certificate", (getter)ContainerKey_getCertificate, NULL, "Certificate", NULL},
-    {"PublicKey", (getter)ContainerKey_getPublicKey, NULL, "PublicKey", NULL},
     {"ExpirationTime", (getter)ContainerKey_getExpirationTime, NULL, "ExpirationTime", NULL},
+#if IS_CADES_VERSION_GREATER_EQUAL(2, 0, 15000)
+    {"PublicKey", (getter)ContainerKey_getPublicKey, NULL, "PublicKey", NULL},
     {"KP_FP", (getter)ContainerKey_getKP_FP, NULL, "KP_FP", NULL},
+#endif
+#if IS_CADES_VERSION_GREATER_EQUAL(2, 0, 15400)
     {"KP_ALGID", (getter)ContainerKey_getKP_ALGID, NULL, "KP_ALGID", NULL},
+#endif
     {NULL} /* Sentinel */
 };
 

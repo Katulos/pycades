@@ -20,5 +20,5 @@ source ~/.bashrc
 ```python
 >>> import pycades
 >>> pycades.ModuleVersion()
-'0.1.19595'
+'0.1.70200'
 ```

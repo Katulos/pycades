@@ -32,7 +32,7 @@ Pycades представляет собой расширение для Python3.
 ```python
 >>> import pycades
 >>> pycades.ModuleVersion()
-'0.1.19509'
+'0.1.70200'
 ```
 
 Лицензирование
@@ -43,6 +43,6 @@ Pycades представляет собой расширение для Python3.
 
 В этом разделе
 ---
-[Сборка расширения для языка Python](/cades/pycades/pycades-build.md)<br/>
-[Установка расширения для языка Python](/cades/pycades/pycades-install.md)<br/>
-[Пример использования](/cades/pycades/pycades-samples.md)<br/>
+[Сборка расширения для языка Python](pycades-build.md)<br/>
+[Установка расширения для языка Python](pycades-install.md)<br/>
+[Пример использования](pycades-samples.md)<br/>

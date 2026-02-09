@@ -473,4 +473,3 @@ PyMODINIT_FUNC PyInit_pycades(void) {
 
     return module;
 }
-

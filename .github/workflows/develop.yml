@@ -23,13 +23,9 @@ jobs:
     if: github.event_name == 'push' || github.event.pull_request.head.repo.full_name != github.repository
 
     steps:
-      # - name: Set env
-      #   env:
-      #     DEBIAN_FRONTEND: "noninteractive"
-
       - name: Install build deps
         run: |
-          apt-get update && apt-get install -y --no-install-recommends \
+          sudo apt-get update && sudo DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
               apt-transport-https \
               build-essential \
               ca-certificates \
@@ -43,17 +39,17 @@ jobs:
 
       - name: Added CryptoPro repo
         run: |
-          echo "machine cryptopro.ru login ${{ secrets.CRYPTOPRO_USERNAME}} password ${{ secrets.CRYPTOPRO_PASSWORD }}" > /etc/apt/auth.conf.d/cryptopro.conf
-          chmod 600 /etc/apt/auth.conf.d/cryptopro.conf
-          echo "deb https://cryptopro.ru/repo/deb 5.0-unstable main" > /etc/apt/sources.list.d/cprocsp.list
-          wget -qO - https://www.cryptopro.ru/sites/default/files/products/csp/cryptopro_key.pub | gpg --dearmor > /etc/apt/trusted.gpg.d/cryptopro.gpg
+          echo "machine cryptopro.ru login ${{ secrets.CRYPTOPRO_USERNAME}} password ${{ secrets.CRYPTOPRO_PASSWORD }}" | sudo tee /etc/apt/auth.conf.d/cryptopro.conf
+          sudo chmod 600 /etc/apt/auth.conf.d/cryptopro.conf
+          echo "deb https://cryptopro.ru/repo/deb 5.0-unstable main" | sudo tee /etc/apt/sources.list.d/cprocsp.list
+          wget -qO - https://www.cryptopro.ru/sites/default/files/products/csp/cryptopro_key.pub | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/cryptopro.gpg
 
       - name: Install CryptoPro and Rutoken driver
         run: |
-          apt-get update && apt-get install -y --no-install-recommends \
+          sudo apt-get update && sudo DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
               cprocsp-pki-cades \
               lsb-cprocsp-devel
-          rm /etc/apt/auth.conf.d/cryptopro.conf
+          sudo rm /etc/apt/auth.conf.d/cryptopro.conf
 
       - name: Checkout sources
         uses: actions/checkout@v4

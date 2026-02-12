@@ -25,7 +25,7 @@ jobs:
     steps:
       - name: Set env
         env:
-          DEBIAN_FRONTEND: 'noninteractive'
+          DEBIAN_FRONTEND: "noninteractive"
 
       - name: Install build deps
         run: |

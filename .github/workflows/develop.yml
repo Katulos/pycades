@@ -42,7 +42,7 @@ jobs:
           echo "machine cryptopro.ru login ${{ secrets.CRYPTOPRO_USERNAME}} password ${{ secrets.CRYPTOPRO_PASSWORD }}" | sudo tee /etc/apt/auth.conf.d/cryptopro.conf
           sudo chmod 600 /etc/apt/auth.conf.d/cryptopro.conf
           echo "deb https://cryptopro.ru/repo/deb 5.0-unstable main" | sudo tee /etc/apt/sources.list.d/cprocsp.list
-          wget -qO - https://www.cryptopro.ru/sites/default/files/products/csp/cryptopro_key.pub | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/cryptopro.gpg
+          wget -qO - https://www.cryptopro.ru/sites/default/files/products/csp/cryptopro_key.pub | sudo gpg --dearmor --yes --output /etc/apt/trusted.gpg.d/cryptopro.gpg
 
       - name: Install CryptoPro and Rutoken driver
         run: |

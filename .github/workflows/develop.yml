@@ -23,9 +23,9 @@ jobs:
     if: github.event_name == 'push' || github.event.pull_request.head.repo.full_name != github.repository
 
     steps:
-      - name: Set env
-        env:
-          DEBIAN_FRONTEND: "noninteractive"
+      # - name: Set env
+      #   env:
+      #     DEBIAN_FRONTEND: "noninteractive"
 
       - name: Install build deps
         run: |

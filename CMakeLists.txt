@@ -111,6 +111,15 @@ target_compile_definitions(pycades PRIVATE
     CPRO_CADES_VERSION_BUILD=${CPRO_CADES_VERSION_BUILD}
 )
 
+if(CMAKE_SYSTEM_PROCESSOR MATCHES "aarch64|arm64|ARM64")
+    target_compile_definitions(_pycades PRIVATE
+        LINUX
+        PROC_TYPE_ARM64=7
+        PROCESSOR_TYPE=PROC_TYPE_ARM64
+    )
+    message("-- Enabled ARM64-specific definitions")
+endif()
+
 find_library(FOUND_LIB_CPPCADES
     NAMES cppcades
     HINTS

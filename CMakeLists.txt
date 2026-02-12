@@ -104,9 +104,9 @@ include_directories(
     ${pycades_DIRS}
 )
 
-Python_add_library(pycades MODULE ${pycades_LIB_SRCS})
+Python_add_library(_pycades MODULE ${pycades_LIB_SRCS} WITH_SOABI)
 
-target_compile_definitions(pycades PRIVATE
+target_compile_definitions(_pycades PRIVATE
     UNIX
     SIZEOF_VOID_P=${CMAKE_SIZEOF_VOID_P}
     CPRO_CADES_VERSION_MAJOR=${CPRO_CADES_VERSION_MAJOR}
@@ -133,5 +133,5 @@ find_library(FOUND_LIB_CPPCADES
     REQUIRED
 )
 
-target_link_libraries(pycades PRIVATE ${FOUND_LIB_CPPCADES})
+target_link_libraries(_pycades PRIVATE ${FOUND_LIB_CPPCADES})
 

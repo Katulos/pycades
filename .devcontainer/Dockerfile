@@ -40,4 +40,3 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 RUN rm /etc/apt/auth.conf.d/cryptopro.conf
 
 RUN apt-get clean
-

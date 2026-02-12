@@ -33,7 +33,6 @@ jobs:
               git-flow \
               gpg \
               libboost-all-dev \
-              librtmp1 \
               python3-dev \
               unzip \
               wget

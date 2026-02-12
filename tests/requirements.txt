@@ -1,3 +1,4 @@
+librt>=0.6.2; platform_python_implementation != 'PyPy'
 pytest
 pytest-mock
 pytest-order

@@ -80,7 +80,7 @@ SET(pycades_DIRS
      /opt/cprocsp/include/pki/cplib
      /opt/cprocsp/include/pki
      ${CMAKE_CURRENT_SOURCE_DIR}/cplib
-)    
+)
 
 INCLUDE_DIRECTORIES( ${Boost_INCLUDE_DIRS} )
 INCLUDE_DIRECTORIES( ${Python_INCLUDE_DIR})

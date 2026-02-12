@@ -1,3 +1,3 @@
 class TestDummy:
-    async def test_dummy(self) -> None:
+    def test_dummy(self) -> None:
         pass

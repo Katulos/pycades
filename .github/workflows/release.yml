@@ -19,34 +19,52 @@ on:
 
 jobs:
   tests:
-    name: Run tests
-    if: github.event_name == 'push' || github.event.pull_request.head.repo.full_name != github.repository
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.9", "3.10", "3.11", "3.12", "3.13"]
+    if: github.event_name == 'push' || github.event.pull_request.head.repo.full_name != github.repository
+
     steps:
+      - name: Install build deps
+        run: |
+          sudo apt-get update && sudo DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+              apt-transport-https \
+              build-essential \
+              ca-certificates \
+              cmake \
+              gpg \
+              libboost-all-dev \
+              python3-dev \
+              wget
+
+      - name: Added CryptoPro repo
+        run: |
+          echo "machine cryptopro.ru login ${{ secrets.CRYPTOPRO_USERNAME}} password ${{ secrets.CRYPTOPRO_PASSWORD }}" | sudo tee /etc/apt/auth.conf.d/cryptopro.conf
+          sudo chmod 600 /etc/apt/auth.conf.d/cryptopro.conf
+          echo "deb https://cryptopro.ru/repo/deb 5.0-unstable main" | sudo tee /etc/apt/sources.list.d/cprocsp.list
+          wget -qO - https://www.cryptopro.ru/sites/default/files/products/csp/cryptopro_key.pub | sudo gpg --dearmor --yes --output /etc/apt/trusted.gpg.d/cryptopro.gpg
+
+      - name: Install CryptoPro and Rutoken driver
+        run: |
+          sudo apt-get update && sudo DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+              cprocsp-pki-cades \
+              lsb-cprocsp-devel
+          sudo rm /etc/apt/auth.conf.d/cryptopro.conf
+
       - name: Checkout sources
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           persist-credentials: false
           fetch-depth: 0
 
       - name: Install uv
-        uses: astral-sh/setup-uv@v5
-
-      - name: Install dependencies
-        uses: excitedleigh/setup-nox@v2.0.0
-
-      - run: nox
-
-  release:
-    needs: [tests]
-    name: Release
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-    if: github.event_name == 'push' || github.event.pull_request.head.repo.full_name != github.repository
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+        uses: astral-sh/setup-uv@v7
         with:
-          persist-credentials: false
-          fetch-depth: 0
+          enable-cache: true
+          python-version: ${{ matrix.python-version }}
+
+      - name: Test with python ${{ matrix.python-version }}
+        run: |
+          uv tool install nox
+          nox

@@ -1,5 +1,13 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 3.15...3.27)
-SET(Python_INCLUDE_DIR "/usr/include/python3.12")
+
+if (CMAKE_VERSION VERSION_LESS 3.18)
+  set(DEV_MODULE Development)
+else()
+  set(DEV_MODULE Development.Module)
+endif()
+
+find_package(Python COMPONENTS Interpreter ${DEV_MODULE} REQUIRED)
+
 set (CMAKE_CXX_STANDARD 11)
 PROJECT(PythonModule LANGUAGES CXX)
     SET (pycades_LIB_SRCS

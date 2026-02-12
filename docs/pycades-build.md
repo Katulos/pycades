@@ -32,11 +32,7 @@ unzip pycades.zip
 cd pycades_*
 ```
 6. Задать значение переменной Python_INCLUDE_DIR в файле CMakeLists.txt (папка с Python.h). 
-7. Если сборка осуществляется на arm64, то применить патч для поддержки arm64:
-```
-patch < ./arm64_support.patch
-```
-8. Выполнить сборку:
+7. Выполнить сборку:
 ```
 mkdir build
 cd build

@@ -20,6 +20,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.9", "3.10", "3.11", "3.12"]
     if: github.event_name == 'push' || github.event.pull_request.head.repo.full_name != github.repository
 
     steps:
@@ -30,11 +33,9 @@ jobs:
               build-essential \
               ca-certificates \
               cmake \
-              git-flow \
               gpg \
               libboost-all-dev \
               python3-dev \
-              unzip \
               wget
 
       - name: Added CryptoPro repo
@@ -52,15 +53,18 @@ jobs:
           sudo rm /etc/apt/auth.conf.d/cryptopro.conf
 
       - name: Checkout sources
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           persist-credentials: false
           fetch-depth: 0
 
       - name: Install uv
-        uses: astral-sh/setup-uv@v5
+        uses: astral-sh/setup-uv@v7
+        with:
+          enable-cache: true
+          python-version: ${{ matrix.python-version }}
 
-      - name: Install nox
-        uses: excitedleigh/setup-nox@v2.0.0
-
-      - run: nox
+      - name: Test with python ${{ matrix.python-version }}
+        run: |
+          uv tool install nox
+          nox

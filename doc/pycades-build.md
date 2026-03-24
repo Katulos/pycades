@@ -11,19 +11,19 @@
     ```bash
     cp -r ~/linux-amd64_deb/ .
     ```
-1. Собрать образ:
+2. Собрать образ:
     ```bash
     docker build -t pycades-build .
     ```
-1. Запустить контейнер с собранным образом:
+3. Запустить контейнер с собранным образом:
     ```
     docker run -it -w /pycades/samples/ pycades-build
     ```
-1. Сгенерировать тестовый сертификат с привязкой к закрытому ключу:
+4. Сгенерировать тестовый сертификат с привязкой к закрытому ключу:
     ```
     /opt/cprocsp/bin/amd64/cryptcp -createcert -dn "CN=test" -provtype 80 -cont '\\.\HDIMAGE\test' -ca https://cryptopro.ru/certsrv
     ```
-1. Выполнить пример:
+5. Выполнить пример:
     ```
     python3 sign_verify.py
     ```
@@ -37,24 +37,24 @@
     ```
     sudo apt install cmake build-essential libboost-all-dev python3-dev
     ```
-1. Скачать [архив с КриптоПро CSP](https://cryptopro.ru/products/csp/downloads), 
+2. Скачать [архив с КриптоПро CSP](https://cryptopro.ru/products/csp/downloads), 
 распаковать этот архив и установить КриптоПро CSP, а также пакеты lsb-cprocsp-devel, cprocsp-pki-cades, cprocsp-legacy:
     ```
     tar xvf linux-amd64_deb.tgz
     cd linux-amd64_deb
     sudo ./install.sh lsb-cprocsp-devel cprocsp-legacy cprocsp-pki-cades
     ```
-1. Скачать исходный код pycades
+3. Скачать исходный код pycades
     ```
     git clone https://github.com/CryptoPro/pycades.git
-    cd pycades/src
+    cd pycades
     ```
-1. Задать значение переменной Python_INCLUDE_DIR в файле CMakeLists.txt (папка с Python.h). 
-1. Если сборка осуществляется на arm64, то применить патч для поддержки arm64:
+4. Задать значение переменной Python_INCLUDE_DIR в файле CMakeLists.txt (папка с Python.h). 
+5. Если сборка осуществляется на arm64, то применить патч для поддержки arm64:
     ```
-    patch < ./arm64_support.patch
+    patch < ./src/arm64_support.patch
     ```
-1. Выполнить сборку:
+6. Выполнить сборку:
     ```
     mkdir build
     cd build

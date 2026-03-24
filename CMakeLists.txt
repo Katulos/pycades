@@ -1,46 +1,47 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 3.5)
 SET(Python_INCLUDE_DIR "/usr/include/python3.12")
 set (CMAKE_CXX_STANDARD 11)
+set(SRC_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src/ext)
 PROJECT(PythonModule LANGUAGES CXX)
     SET (pycades_LIB_SRCS
-            PyCades.cpp
-            PyCadesAbout.cpp
-            PyCadesAlgorithm.cpp
-            PyCadesAttribute.cpp
-            PyCadesAttributes.cpp
-            PyCadesBasicConstraints.cpp
-            PyCadesBlobs.cpp
-            PyCadesCertificate.cpp
-            PyCadesCertificates.cpp
-            PyCadesCertificateStatus.cpp
-            PyCadesCRL.cpp
-            PyCadesEncodedData.cpp
-            PyCadesEnvelopedData.cpp
-            PyCadesEKU.cpp
-            PyCadesEKUs.cpp
-            PyCadesExtension.cpp
-            PyCadesExtensions.cpp
-            PyCadesExtendedKeyUsage.cpp
-            PyCadesHashedData.cpp
-            PyCadesKeyUsage.cpp
-            PyCadesOID.cpp
-            PyCadesPrivateKey.cpp
-            PyCadesPublicKey.cpp
-            PyCadesRawSignature.cpp
-            PyCadesRecipients.cpp
-            PyCadesSignatureStatus.cpp
-            PyCadesSignedData.cpp
-            PyCadesSignedXML.cpp
-            PyCadesSigner.cpp
-            PyCadesSigners.cpp
-            PyCadesStore.cpp
-            PyCadesSymmetricAlgorithm.cpp
-            PyCadesVersion.cpp
-            PyEnrollContainer.cpp
-            PyEnrollContainers.cpp
-            PyEnrollContainerKey.cpp
-            PyEnrollContainerKeys.cpp
-            PyEnrollCspInformation.cpp
+            ${SRC_DIR}/PyCades.cpp
+            ${SRC_DIR}/PyCadesAbout.cpp
+            ${SRC_DIR}/PyCadesAlgorithm.cpp
+            ${SRC_DIR}/PyCadesAttribute.cpp
+            ${SRC_DIR}/PyCadesAttributes.cpp
+            ${SRC_DIR}/PyCadesBasicConstraints.cpp
+            ${SRC_DIR}/PyCadesBlobs.cpp
+            ${SRC_DIR}/PyCadesCertificate.cpp
+            ${SRC_DIR}/PyCadesCertificates.cpp
+            ${SRC_DIR}/PyCadesCertificateStatus.cpp
+            ${SRC_DIR}/PyCadesCRL.cpp
+            ${SRC_DIR}/PyCadesEncodedData.cpp
+            ${SRC_DIR}/PyCadesEnvelopedData.cpp
+            ${SRC_DIR}/PyCadesEKU.cpp
+            ${SRC_DIR}/PyCadesEKUs.cpp
+            ${SRC_DIR}/PyCadesExtension.cpp
+            ${SRC_DIR}/PyCadesExtensions.cpp
+            ${SRC_DIR}/PyCadesExtendedKeyUsage.cpp
+            ${SRC_DIR}/PyCadesHashedData.cpp
+            ${SRC_DIR}/PyCadesKeyUsage.cpp
+            ${SRC_DIR}/PyCadesOID.cpp
+            ${SRC_DIR}/PyCadesPrivateKey.cpp
+            ${SRC_DIR}/PyCadesPublicKey.cpp
+            ${SRC_DIR}/PyCadesRawSignature.cpp
+            ${SRC_DIR}/PyCadesRecipients.cpp
+            ${SRC_DIR}/PyCadesSignatureStatus.cpp
+            ${SRC_DIR}/PyCadesSignedData.cpp
+            ${SRC_DIR}/PyCadesSignedXML.cpp
+            ${SRC_DIR}/PyCadesSigner.cpp
+            ${SRC_DIR}/PyCadesSigners.cpp
+            ${SRC_DIR}/PyCadesStore.cpp
+            ${SRC_DIR}/PyCadesSymmetricAlgorithm.cpp
+            ${SRC_DIR}/PyCadesVersion.cpp
+            ${SRC_DIR}/PyEnrollContainer.cpp
+            ${SRC_DIR}/PyEnrollContainers.cpp
+            ${SRC_DIR}/PyEnrollContainerKey.cpp
+            ${SRC_DIR}/PyEnrollContainerKeys.cpp
+            ${SRC_DIR}/PyEnrollCspInformation.cpp
         )
 FIND_PACKAGE( Boost REQUIRED )
 
@@ -70,7 +71,7 @@ MESSAGE("-- cprocsp-pki-cades: ${CPRO_CADES_VERSION_MAJOR}.${CPRO_CADES_VERSION_
 SET(CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} -Wno-write-strings")
 SET(CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} -Wno-deprecated-declarations")
 SET(CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} -Wno-narrowing")
-SET(CMAKE_INCLUDE_CURRENT_DIR ON)
+#SET(CMAKE_INCLUDE_CURRENT_DIR ON)
 SET(pycades_DIRS
      /opt/cprocsp/include
      /opt/cprocsp/include/cpcsp
@@ -78,7 +79,8 @@ SET(pycades_DIRS
      /opt/cprocsp/include/pki/cppcades
      /opt/cprocsp/include/pki/cplib
      /opt/cprocsp/include/pki
-     ${CMAKE_CURRENT_SOURCE_DIR}/cplib
+     ${SRC_DIR}
+     ${SRC_DIR}/cplib
 )    
 
 INCLUDE_DIRECTORIES( ${Boost_INCLUDE_DIRS} )
@@ -100,4 +102,4 @@ TARGET_LINK_LIBRARIES(pycades ${FOUND_LIB_CPLIB})
 
 ADD_CUSTOM_COMMAND(TARGET pycades
     POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:pycades> ../../samples)
+    COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:pycades> ../samples)
